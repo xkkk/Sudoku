@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+          package="com.mjxc.sudokuc">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/app_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <activity android:name=".GameActivity">
+
+        </activity>
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <category android:name="android.intent.category.LAUNCHER"/>
+            <action android:name="android.intent.action.MAIN"/>
+        </intent-filter>
+        </activity>
+        <activity android:name=".RankActivity"/>
+        <activity android:name=".HelpActivity"/>
+        <activity android:name=".CheckpointActivity"/>
+
+    </application>
+
+</manifest>
