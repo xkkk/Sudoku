@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">数独游戏</string>
+    <string name="replay_tips">是否放弃当前进度重新开始？</string>
     <string name="question_simple_1">761934825354628197928157634219546378483279516576381942195762483832495761647813200</string>
     <string name="answer_simple_1">761934825354628197928157634219546378483279516576381942195762483832495761647813259</string>
 

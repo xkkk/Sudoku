@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mjxc.sudokuc.dialog.DialogUtil;
+
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +27,7 @@ import cn.waps.AppConnect;
  * 描述：
  */
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String LEVEL = "level";//游戏等级 简单：0  中等：1  困难：2  骨灰：3
     private String level = "0";
     private boolean isCheck =false;
@@ -33,6 +35,8 @@ public class GameActivity extends AppCompatActivity {
     private Timer mTimer;
     private int cnt = 0;
     private AlertDialog  mAlertDialog;
+    private TextView mPauseTv;
+    private TextView mReplayTv;
 
 
     @Override
@@ -42,10 +46,14 @@ public class GameActivity extends AppCompatActivity {
         if(getIntent()!=null){
             level = getIntent().getStringExtra(LEVEL);
         }
-        final SudokuView view = (SudokuView) findViewById(R.id.sudokuview);
-        LinearLayout adlayout =(LinearLayout)findViewById(R.id.AdLinearLayout);
+        final SudokuView view = findViewById(R.id.sudokuview);
+        mPauseTv = findViewById(R.id.pause);
+        mPauseTv.setOnClickListener(this);
+        mReplayTv = findViewById(R.id.replay);
+        mReplayTv.setOnClickListener(this);
+        LinearLayout adlayout =findViewById(R.id.AdLinearLayout);
         AppConnect.getInstance(this).showBannerAd(this, adlayout);
-        textView = (TextView) findViewById(R.id.timer);
+        textView = findViewById(R.id.timer);
         view.setLevel(Integer.valueOf(level),1);
         findViewById(R.id.btn_check).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +148,27 @@ public class GameActivity extends AppCompatActivity {
         mHandler.removeCallbacksAndMessages(null);
         onViewSet();
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.pause:
+                DialogUtil.showPauseDialog(GameActivity.this, "暂停游戏", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                break;
+            case R.id.replay:
+                break;
+        }
     }
 }
 

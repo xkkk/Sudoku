@@ -45,6 +45,7 @@
             android:gravity="center"
             android:layout_toRightOf="@id/pause"
             android:layout_marginLeft="15dp"
+            android:drawableLeft="@mipmap/tick"
             android:text="00:00:00"/>
 
         <Button
