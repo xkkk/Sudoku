@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import cn.waps.AppConnect;
 
 /**
  * 作者：xk on 2018/3/10
@@ -17,10 +20,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppConnect.getInstance(this);
         findViewById(R.id.btn_simple).setOnClickListener(this);
         findViewById(R.id.btn_normal).setOnClickListener(this);
         findViewById(R.id.btn_hard).setOnClickListener(this);
         findViewById(R.id.help).setOnClickListener(this);
+        LinearLayout adlayout =(LinearLayout)findViewById(R.id.AdLinearLayout);
+        AppConnect.getInstance(this).showBannerAd(this, adlayout);
     }
 
     @Override

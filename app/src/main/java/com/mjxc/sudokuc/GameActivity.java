@@ -10,11 +10,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cn.waps.AppConnect;
 
 /**
  * 作者：xk on 2017/8/7
@@ -40,6 +43,8 @@ public class GameActivity extends AppCompatActivity {
             level = getIntent().getStringExtra(LEVEL);
         }
         final SudokuView view = (SudokuView) findViewById(R.id.sudokuview);
+        LinearLayout adlayout =(LinearLayout)findViewById(R.id.AdLinearLayout);
+        AppConnect.getInstance(this).showBannerAd(this, adlayout);
         textView = (TextView) findViewById(R.id.timer);
         view.setLevel(Integer.valueOf(level),1);
         findViewById(R.id.btn_check).setOnClickListener(new View.OnClickListener() {

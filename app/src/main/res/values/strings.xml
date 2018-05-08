@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sudoku</string>
+    <string name="app_name">数独游戏</string>
     <string name="question_simple_1">761934825354628197928157634219546378483279516576381942195762483832495761647813200</string>
     <string name="answer_simple_1">761934825354628197928157634219546378483279516576381942195762483832495761647813259</string>
 

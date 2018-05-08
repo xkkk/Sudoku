@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'keystory'
+            keyPassword '1qaz2wsx'
+            storeFile file('C:/Users/xk/android.jks')
+            storePassword '1qaz2wsx'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.mjxc.sudokuc"
