@@ -2,7 +2,6 @@ package com.mjxc.sudokuc;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
@@ -79,7 +78,7 @@ public class SudokuView extends View {
         //初始化绘制九宫格和初始数字
             for (int i = 0; i < 9; i++) {
                 mPaint.setStrokeWidth(i % 3 == 0 ? 10 : 1);
-                mPaint.setColor(Color.BLACK);
+                mPaint.setColor(getResources().getColor(R.color.table_line_color));
                 canvas.drawLine(0, i * height, getWidth(), i * height, mPaint);
                 canvas.drawLine(i * width, 0, i * width, getWidth(), mPaint);
             }
@@ -88,13 +87,13 @@ public class SudokuView extends View {
 
             //绘制底部9个数字
             for (int i = 0; i < 9; i++) {
-                float cy = height * 9 + height / 2+20;
+                float cy = height * 9 + height / 2+50;
                 float cx = width / 2 + width * i;
                 mPaint.setStyle(Paint.Style.FILL);
-                mPaint.setColor(getResources().getColor(R.color.colorAccent));
+                mPaint.setColor(getResources().getColor(R.color.ball_bg_color));
                 canvas.drawCircle(cx, cy, width / 2, mPaint);
-                mPaint.setColor(Color.WHITE);
-                mPaint.setTextSize(width * 0.8f);
+                mPaint.setColor(getResources().getColor(R.color.colorPrimary));
+                mPaint.setTextSize(width * 0.6f);
                 mPaint.setTypeface(Typeface.DEFAULT_BOLD);
                 mPaint.setTextAlign(Paint.Align.CENTER);
                 canvas.drawText(String.valueOf(i + 1), cx, cy + height / 4, mPaint);
@@ -110,20 +109,22 @@ public class SudokuView extends View {
                     int column = i % 9;//列
                     if(isCheck){
                         if(chars2[i]!=answer.toCharArray()[i]){
-                            mPaint.setColor(Color.BLUE);
+                            mPaint.setColor(getResources().getColor(R.color.colorAccent));
                             mPaint.setStyle(Paint.Style.FILL);
                             canvas.drawRect(column*width,row*height,column*width+width,row*height+height,mPaint);
                         }
                     }
                     if(chars2[i]!=chars[i]){//说明是新填入的数字
-                        mPaint.setColor(getResources().getColor(R.color.colorAccent));
+                        mPaint.setColor(getResources().getColor(R.color.num_color));
                     }else {
-                        mPaint.setColor(Color.BLACK);
+                        mPaint.setColor(getResources().getColor(R.color.colorPrimary));
                     }
                     mPaint.setStyle(Paint.Style.FILL);
-                    canvas.drawText(String.valueOf(chars2[i]), column * width + width / 2, row * height + height / 2 + height / 4, mPaint);
+                    mPaint.setTextSize(60f);
+                    //
+                    canvas.drawText(String.valueOf(chars2[i]), column * width + width / 2, row * height + height / 2 + height/6 , mPaint);
                     if(chars2[i]==marketNum){
-                        mPaint.setColor(Color.RED);
+                        mPaint.setColor(getResources().getColor(R.color.choose_rect_color));
                         mPaint.setStyle(Paint.Style.STROKE);
                         canvas.drawRect(column*width,row*height,column*width+width,row*height+height,mPaint);
                     }
@@ -133,7 +134,7 @@ public class SudokuView extends View {
 
             //选择某一表格准备填数字
         if(mTable != null){
-            mPaint.setColor(Color.YELLOW);
+            mPaint.setColor(getResources().getColor(R.color.choose_rect_color));
             mPaint.setStyle(Paint.Style.STROKE);
             canvas.drawRect(mTable.column*width,mTable.row*height,mTable.column*width+width,mTable.row*height+height,mPaint);
         }

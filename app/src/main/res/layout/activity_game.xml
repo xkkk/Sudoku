@@ -4,33 +4,60 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:visibility="visible"
-        android:orientation="horizontal">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
         <TextView
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|right"
-            android:text="用时："/>
+            android:id="@+id/replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:background="@mipmap/replay"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/replay"
+            android:layout_toEndOf="@id/replay"
+            android:layout_marginLeft="25dp"
+            android:gravity="center"
+            android:background="@mipmap/pause"
+
+            />
+
+
         <TextView
             android:id="@+id/timer"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:gravity="left|center_vertical"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:typeface="monospace"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:layout_toRightOf="@id/pause"
+            android:layout_marginLeft="15dp"
             android:text="00:00:00"/>
 
         <Button
             android:id="@+id/btn_check"
             android:layout_width="65dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:textColor="#ff00"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:background="@drawable/comm_btn_bg"
             android:text="检查"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.mjxc.sudokuc.SudokuView
         android:id="@+id/sudokuview"

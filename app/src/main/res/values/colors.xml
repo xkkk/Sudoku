@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#FFB33A</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gray">#cccccc</color>
+    <color name="table_line_color">#FFC200</color>
+    <color name="ball_bg_color">#EAB56A</color>
+    <color name="choose_bg_color">#FFCE19</color>
+    <color name="num_color">#43AF9E</color>
+    <color name="choose_rect_color">#48F1F3</color>
+
 </resources>
