@@ -1,6 +1,7 @@
 package com.mjxc.sudokuc.dialog;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -83,4 +84,12 @@ public class DialogUtil {
         mBuilder.show();
     }
 
+
+    public static void showReplayDialog(Context context, TipsDialog.OnBtnClickListener listener){
+        TipsDialog dialog = new TipsDialog(context);
+        if(null!=listener){
+            dialog.setOnBtnListener(listener);
+        }
+        dialog.show();
+    }
 }

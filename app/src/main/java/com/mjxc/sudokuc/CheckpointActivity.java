@@ -1,12 +1,17 @@
 package com.mjxc.sudokuc;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.mjxc.sudokuc.model.CheckpointBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：xk on 2018/3/30
@@ -17,31 +22,35 @@ import android.view.ViewGroup;
 public class CheckpointActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
+    private List<CheckpointBean> mList;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_checkpoint);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        mRecyclerView = findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
-        mRecyclerView.setAdapter(new RecyclerView.Adapter() {
-            @NonNull
+        createData();
+        CheckpointAdapter checkpointAdapter = new CheckpointAdapter(this,mList);
+        mRecyclerView.setAdapter(checkpointAdapter);
+        checkpointAdapter.setItemClickListener(new CheckpointAdapter.OnItemClickListener() {
             @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 0;
+            public void onItemClick(int position) {
+                String id = mList.get(position).getId();
+                Toast.makeText(CheckpointActivity.this,"第"+id+"关",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CheckpointActivity.this,GameActivity.class);
+                intent.putExtra(GameActivity.LEVEL,"0");
+                startActivity(intent);
             }
         });
+    }
 
+    private void createData(){
+        mList = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            CheckpointBean bean = new CheckpointBean(String.valueOf(i+1),"00:00","NO");
+            mList.add(bean);
+        }
     }
 }

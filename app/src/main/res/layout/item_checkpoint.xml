@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/ll_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@mipmap/checkpoint_pass"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width = "wrap_content"
         android:layout_height="wrap_content"
-        android:text="point 1"/>
+        android:textColor="#fff"
+        android:textStyle="bold"
+        tools:text="point 1"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        tools:text="00:00"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/icon_pass"/>
+</FrameLayout>

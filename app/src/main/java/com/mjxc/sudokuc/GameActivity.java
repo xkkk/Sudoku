@@ -1,23 +1,18 @@
 package com.mjxc.sudokuc;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mjxc.sudokuc.dialog.DialogUtil;
-
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.mjxc.sudokuc.dialog.TipsDialog;
 
 import cn.waps.AppConnect;
 
@@ -30,13 +25,15 @@ import cn.waps.AppConnect;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String LEVEL = "level";//游戏等级 简单：0  中等：1  困难：2  骨灰：3
     private String level = "0";
-    private boolean isCheck =false;
-    private TextView textView;
-    private Timer mTimer;
-    private int cnt = 0;
+    private int checkpoint = 1;
+    private Chronometer mChronometer;
+    private long mRecordTime = 0L;
+    private boolean isStart = false;
     private AlertDialog  mAlertDialog;
     private TextView mPauseTv;
     private TextView mReplayTv;
+    SudokuView mSudokuView;
+
 
 
     @Override
@@ -46,58 +43,40 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(getIntent()!=null){
             level = getIntent().getStringExtra(LEVEL);
         }
-        final SudokuView view = findViewById(R.id.sudokuview);
+        mSudokuView = findViewById(R.id.sudokuview);
         mPauseTv = findViewById(R.id.pause);
         mPauseTv.setOnClickListener(this);
         mReplayTv = findViewById(R.id.replay);
         mReplayTv.setOnClickListener(this);
         LinearLayout adlayout =findViewById(R.id.AdLinearLayout);
         AppConnect.getInstance(this).showBannerAd(this, adlayout);
-        textView = findViewById(R.id.timer);
-        view.setLevel(Integer.valueOf(level),1);
+        mChronometer = findViewById(R.id.timer);
+        mSudokuView.setLevel(Integer.valueOf(level),checkpoint);
         findViewById(R.id.btn_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.check(!view.isCheck);
+                mSudokuView.check(!mSudokuView.isCheck);
             }
         });
-        view.setOnSuccessListener(new OnSuccessListener() {
+        mSudokuView.setOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(final int levelUp) {
-                mTimer.cancel();
-                mTimer.purge();
-
-                onFinish(levelUp, view);
+                checkpoint = levelUp;
+                onFinish(levelUp, mSudokuView);
 
             }
         });
-        view.setOnClickListener(new View.OnClickListener() {
+        mSudokuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimer == null) {
-                    mTimer = new Timer();
-                    mTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            mHandler.sendEmptyMessage(1);
-                        }
-                    }, 0, 1000);
+                if(!isStart){
+                    isStart = true;
+                    mChronometer.setBase(SystemClock.elapsedRealtime());
+                    mChronometer.start();
                 }
             }
         });
     }
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if(msg.what==1){
-                String time = getStringTime(cnt++);
-                Log.i("GameActivity","cnt = "+cnt);
-                textView.setText(time);
-            }
-        }
-    };
 
     private void onFinish(final int levelUp, final SudokuView view) {
         if(mAlertDialog==null) {
@@ -112,7 +91,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 public void onClick(DialogInterface dialog, int which) {
                     view.setLevel(Integer.valueOf(level), levelUp);
                     dialog.dismiss();
-                    onViewSet();
+                    resetView();
                 }
             });
             //    设置一个NegativeButton
@@ -130,23 +109,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void onViewSet(){
-        textView.setText("00:00:00");
-        mTimer = null;
-        cnt=0;
-    }
-
-    private String getStringTime(int cnt) {
-        int hour = cnt/3600;
-        int min = cnt % 3600 / 60;
-        int second = cnt % 60;
-        return String.format(Locale.CHINA,"%02d:%02d:%02d",hour,min,second);
+    private void resetView(){
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        mRecordTime = 0L;
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+    @Override
     protected void onDestroy() {
-        mHandler.removeCallbacksAndMessages(null);
-        onViewSet();
         super.onDestroy();
     }
 
@@ -154,19 +129,36 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.pause:
+                mRecordTime = SystemClock.elapsedRealtime();
+                mChronometer.stop();
                 DialogUtil.showPauseDialog(GameActivity.this, "暂停游戏", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        finish();
                     }
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        if(mRecordTime!=0){
+                            mChronometer.setBase(mChronometer.getBase()+(SystemClock.elapsedRealtime() - mRecordTime));
+                            mChronometer.start();
+                        }
                     }
                 });
                 break;
             case R.id.replay:
+                DialogUtil.showReplayDialog(GameActivity.this, new TipsDialog.OnBtnClickListener() {
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onConfirm() {
+                        mSudokuView.setLevel(Integer.valueOf(level), checkpoint);
+                       resetView();
+                    }
+                });
                 break;
         }
     }
