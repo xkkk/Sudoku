@@ -145,12 +145,15 @@ public class SudokuView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        if(y<9*height){//棋盘
+
+        if(y < 9*height){//棋盘 y < 1080
             mTable = getLocation(x,y);
             invalidate();
-        }else if(y>9*height&&y<10*height){//底部待选项
+        }else if(y>9*height&&y<(11*height)){//底部待选项  1080 < y < 1320
+
             mPoint = getNumber(x,y);
             int num = (int) mPoint.x;
+            Log.i("Sudoku","num = "+num);
             if(mTable!=null){
                 setAnswer(num,mTable.row,mTable.column);
             }
