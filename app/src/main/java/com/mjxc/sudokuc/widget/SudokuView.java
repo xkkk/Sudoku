@@ -1,4 +1,4 @@
-package com.mjxc.sudokuc;
+package com.mjxc.sudokuc.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.mjxc.sudokuc.OnSuccessListener;
+import com.mjxc.sudokuc.R;
 
 /**
  * 作者：xk on 2017/8/7
@@ -196,7 +199,6 @@ public class SudokuView extends View {
         Log.i(TAG,"question = "+tempAnswer);
         Log.i(TAG,"chars = "+chars[index]);
         if(isSuccess()){
-//            Toast.makeText(getContext(),"恭喜通关",Toast.LENGTH_SHORT).show();
             if(listener!=null){
                 listener.onSuccess(2);
             }
@@ -204,6 +206,10 @@ public class SudokuView extends View {
             invalidate();
     }
 
+    /**
+     * @param level 游戏难度
+     * @param num 游戏关卡
+     */
     public void setLevel(int level,int num){
         switch (level){
             case 0:
@@ -265,7 +271,7 @@ public class SudokuView extends View {
         return tempAnswer.equals(answer);
     }
 
-    boolean isCheck = false;
+    public boolean isCheck = false;
     public void check(boolean isCheck){
         this.isCheck = isCheck;
         invalidate();

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@mipmap/game_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -73,7 +74,7 @@
             android:text="检查"/>
     </RelativeLayout>
 
-    <com.mjxc.sudokuc.SudokuView
+    <com.mjxc.sudokuc.widget.SudokuView
         android:id="@+id/sudokuview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

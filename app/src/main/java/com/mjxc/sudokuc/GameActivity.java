@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mjxc.sudokuc.dialog.DialogUtil;
 import com.mjxc.sudokuc.dialog.TipsDialog;
+import com.mjxc.sudokuc.widget.SudokuView;
 
 import cn.waps.AppConnect;
 
@@ -24,6 +25,7 @@ import cn.waps.AppConnect;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String LEVEL = "level";//游戏等级 简单：0  中等：1  困难：2  骨灰：3
+    public static final String CHECKPOINT = "checkpoint";
     private String level = "0";
     private int checkpoint = 1;
     private Chronometer mChronometer;
@@ -32,7 +34,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private AlertDialog  mAlertDialog;
     private TextView mPauseTv;
     private TextView mReplayTv;
-    SudokuView mSudokuView;
+    private SudokuView mSudokuView;
 
 
 
@@ -42,6 +44,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         if(getIntent()!=null){
             level = getIntent().getStringExtra(LEVEL);
+            checkpoint = getIntent().getIntExtra(CHECKPOINT,1);
         }
         mSudokuView = findViewById(R.id.sudokuview);
         mPauseTv = findViewById(R.id.pause);
@@ -61,8 +64,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mSudokuView.setOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(final int levelUp) {
-                checkpoint = levelUp;
-                onFinish(levelUp, mSudokuView);
+                checkpoint ++;
+                onFinish(checkpoint, mSudokuView);
 
             }
         });

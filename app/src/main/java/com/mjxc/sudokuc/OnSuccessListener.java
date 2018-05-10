@@ -6,6 +6,6 @@ package com.mjxc.sudokuc;
  * 描述：
  */
 
-interface OnSuccessListener {
+public interface OnSuccessListener {
     void onSuccess(int levelUp);
 }
