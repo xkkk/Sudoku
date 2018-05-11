@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 intent.putExtra(GameActivity.LEVEL,"2");
                 break;
             case R.id.btn_normal:
-                intent = new Intent(MainActivity.this,GameActivity.class);
+                intent = new Intent(MainActivity.this,CheckpointActivity.class);
                 intent.putExtra(GameActivity.LEVEL,"1");
                 break;
             case R.id.btn_simple:
@@ -48,6 +48,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.help:
                 intent = new Intent(MainActivity.this,HelpActivity.class);
+//                intent = new Intent(MainActivity.this,RankActivity.class);
                 break;
         }
         if(intent!=null){

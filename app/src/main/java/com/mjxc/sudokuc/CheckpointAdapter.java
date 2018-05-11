@@ -38,7 +38,7 @@ public class CheckpointAdapter extends RecyclerView.Adapter<CheckpointAdapter.Vi
     @Override
     public void onBindViewHolder(CheckpointAdapter.ViewHolder holder, final int position) {
         CheckpointBean item = mList.get(position);
-        holder.pointTv.setText(item.getId());
+        holder.pointTv.setText(""+item.getCheckpoint());
         holder.timeTv.setText(item.getTime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,5 +4,6 @@
     android:id="@+id/recyclerview"
     android:layout_width="match_parent"
     android:layout_gravity="center"
-    android:layout_marginTop="30dp"
+    android:paddingTop="30dp"
+    android:background="@mipmap/game_bg"
     android:layout_height="match_parent"/>

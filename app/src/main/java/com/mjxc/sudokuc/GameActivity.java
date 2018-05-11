@@ -4,14 +4,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mjxc.sudokuc.dialog.DialogUtil;
+import com.mjxc.sudokuc.dialog.SuccessDialog;
 import com.mjxc.sudokuc.dialog.TipsDialog;
 import com.mjxc.sudokuc.widget.SudokuView;
 
@@ -31,7 +32,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Chronometer mChronometer;
     private long mRecordTime = 0L;
     private boolean isStart = false;
-    private AlertDialog  mAlertDialog;
+    private SuccessDialog  mAlertDialog;
     private TextView mPauseTv;
     private TextView mReplayTv;
     private SudokuView mSudokuView;
@@ -65,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSuccess(final int levelUp) {
                 checkpoint ++;
+                mChronometer.stop();
                 onFinish(checkpoint, mSudokuView);
 
             }
@@ -82,31 +84,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onFinish(final int levelUp, final SudokuView view) {
-        if(mAlertDialog==null) {
-            AlertDialog.Builder  mBuilder = new AlertDialog.Builder(GameActivity.this);
-            //    设置Title的内容
-            mBuilder.setTitle("恭喜通关");
-            //    设置Content来显示一个信息
-            mBuilder.setMessage("是否开始下一局？");
-            //    设置一个PositiveButton
-            mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        if(mAlertDialog==null){
+             mAlertDialog =  DialogUtil.showNextDialog(GameActivity.this, mChronometer.getText().toString(), new SuccessDialog.OnSuccessDialogBtnListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onSelectHurdle() {
+                    finish();
+                }
+
+                @Override
+                public void onHome() {
+                    finish();
+                }
+
+                @Override
+                public void onNext() {
                     view.setLevel(Integer.valueOf(level), levelUp);
-                    dialog.dismiss();
                     resetView();
                 }
-            });
-            //    设置一个NegativeButton
-            mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+                public void share() {
+                    Toast.makeText(GameActivity.this,"分享给好友",Toast.LENGTH_SHORT).show();
                 }
             });
-            mAlertDialog = mBuilder.create();
         }
-        //    显示出该对话框
         if(!mAlertDialog.isShowing()){
             mAlertDialog.show();
         }
@@ -126,6 +127,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        DialogUtil.showExitDialog(this,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
     @Override

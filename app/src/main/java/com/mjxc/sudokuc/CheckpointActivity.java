@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.mjxc.sudokuc.model.CheckpointBean;
 
@@ -23,6 +22,7 @@ public class CheckpointActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private List<CheckpointBean> mList;
+    private String level;
 
 
     @Override
@@ -30,6 +30,9 @@ public class CheckpointActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_checkpoint);
         mRecyclerView = findViewById(R.id.recyclerview);
+        if(getIntent()!=null){
+            level = getIntent().getStringExtra(GameActivity.LEVEL);
+        }
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
         createData();
         CheckpointAdapter checkpointAdapter = new CheckpointAdapter(this,mList);
@@ -37,10 +40,11 @@ public class CheckpointActivity extends AppCompatActivity {
         checkpointAdapter.setItemClickListener(new CheckpointAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                String id = mList.get(position).getId();
-                Toast.makeText(CheckpointActivity.this,"第"+id+"关",Toast.LENGTH_SHORT).show();
+                int id = mList.get(position).getCheckpoint();
+//                Toast.makeText(CheckpointActivity.this,"第"+id+"关",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CheckpointActivity.this,GameActivity.class);
-                intent.putExtra(GameActivity.LEVEL,"0");
+                intent.putExtra(GameActivity.LEVEL,level);
+                intent.putExtra(GameActivity.CHECKPOINT,id);
                 startActivity(intent);
             }
         });
@@ -48,8 +52,8 @@ public class CheckpointActivity extends AppCompatActivity {
 
     private void createData(){
         mList = new ArrayList<>();
-        for (int i = 0; i < 24; i++) {
-            CheckpointBean bean = new CheckpointBean(String.valueOf(i+1),"00:00","NO");
+        for (int i = 0; i < 10; i++) {
+            CheckpointBean bean = new CheckpointBean(i+1,"00:00","NO");
             mList.add(bean);
         }
     }
