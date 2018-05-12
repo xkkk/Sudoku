@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.mjxc.sudokuc.dialog.DialogUtil;
 import com.mjxc.sudokuc.dialog.SuccessDialog;
 import com.mjxc.sudokuc.dialog.TipsDialog;
+import com.mjxc.sudokuc.model.CheckpointBean;
 import com.mjxc.sudokuc.widget.SudokuView;
 
 import cn.waps.AppConnect;
@@ -65,6 +66,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mSudokuView.setOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(final int levelUp) {
+                CheckpointBean bean = new CheckpointBean(checkpoint,mChronometer.getText().toString(),"YES");
+                bean.save();
                 checkpoint ++;
                 mChronometer.stop();
                 onFinish(checkpoint, mSudokuView);
@@ -114,7 +117,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void resetView(){
+        isStart = false;
         mChronometer.setBase(SystemClock.elapsedRealtime());
+//        mChronometer.start();
         mRecordTime = 0L;
     }
 
@@ -132,7 +137,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         DialogUtil.showExitDialog(this,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

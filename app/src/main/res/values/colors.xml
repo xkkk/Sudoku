@@ -10,4 +10,7 @@
     <color name="num_color">#43AF9E</color>
     <color name="choose_rect_color">#48F1F3</color>
 
+    <!--全局背景颜色-->
+    <color name="global_bg_color">#F8F8F8</color>
+
 </resources>

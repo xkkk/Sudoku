@@ -36,4 +36,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:recyclerview-v7:27.0.0'
     compile 'org.litepal.android:core:1.6.1'
+    compile "io.reactivex.rxjava2:rxjava:2.1.13"
+    compile "io.reactivex:rxandroid:1.2.1"
+
 }

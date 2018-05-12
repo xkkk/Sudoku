@@ -51,7 +51,10 @@ public class DialogUtil {
         if(null!=listener){
             dialog.setOnBtnListener(listener);
         }
+
         dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
@@ -127,9 +130,12 @@ public class DialogUtil {
 
     public static void showReplayDialog(Context context, TipsDialog.OnBtnClickListener listener){
         TipsDialog dialog = new TipsDialog(context);
+
         if(null!=listener){
             dialog.setOnBtnListener(listener);
         }
         dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
     }
 }

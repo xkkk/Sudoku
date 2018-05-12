@@ -24,14 +24,24 @@
 
         </activity>
         <activity android:name=".MainActivity">
-        <intent-filter>
-            <category android:name="android.intent.category.LAUNCHER"/>
-            <action android:name="android.intent.action.MAIN"/>
-        </intent-filter>
+        <!--<intent-filter>-->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+        <!--</intent-filter>-->
         </activity>
         <activity android:name=".RankActivity"/>
         <activity android:name=".HelpActivity"/>
         <activity android:name=".CheckpointActivity"/>
+        <activity android:name=".SplashActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme_Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 

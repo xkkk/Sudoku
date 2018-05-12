@@ -14,4 +14,18 @@
         <item name="android:windowBackground">@android:color/transparent</item> <!--窗口背景色透明-->
         <item name="android:backgroundDimEnabled">false</item> <!--背景是否模糊显示-->
     </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/global_bg_color</item>
+    </style>
+
+    <style name="AppTheme_Splash" parent="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/image_splash</item>
+    </style>
 </resources>
